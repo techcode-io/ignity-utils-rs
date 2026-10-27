@@ -13,8 +13,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Rust stable
-      uses: dtolnay/rust-toolchain@stable
+    - name: Setup Rust
+      id: rust
+      uses: techcode-io/github-actions/setup-rust@setup-rust/v1
       with:
         targets: ${{ inputs.targets }}
         components: ${{ inputs.components }}
@@ -27,6 +28,6 @@ runs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           target/
-        key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ inputs.targets }}-${{ hashFiles('**/Cargo.toml', '**/Cargo.lock') }}
+        key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ steps.rust.outputs.cachekey }}-${{ inputs.targets }}-${{ hashFiles('**/Cargo.toml', '**/Cargo.lock') }}
         restore-keys: |
-          ${{ runner.os }}-${{ runner.arch }}-cargo-${{ inputs.targets }}-
+          ${{ runner.os }}-${{ runner.arch }}-cargo-${{ steps.rust.outputs.cachekey }}-${{ inputs.targets }}-
