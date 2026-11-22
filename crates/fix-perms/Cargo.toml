@@ -13,4 +13,4 @@ path = "src/main.rs"
 
 [dependencies]
 walkdir = "2"
-nix = { version = "0.31.3", features = ["fs", "user"] }
+nix = { version = "0.32.0", features = ["fs", "user"] }
